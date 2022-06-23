@@ -10,14 +10,26 @@ def index_app(request):
     return render(request, 'index.html', contex)
 
 
-def index_create(requeste):
-    if requeste.method == "GET":
-        return render(requeste, 'create.html')
-    else:
-        contex = {
-            'title': requeste.POST.aget("title"),
-            'author': requeste.POST.get("author"),
-            'content': requeste.POST.get("content")
+def article_view(request):
+    pk = request.GET.get("pk")
+    article = Article.objects.get(pk=pk)
+    contex = {
+        "article": article
+    }
+    return render(request, 'article.html', contex)
 
+
+def index_create(request):
+    if request.method == "GET":
+        return render(request, 'create.html')
+    else:
+        title = request.POST.get("title")
+        author = request.POST.get("author")
+        content = request.POST.get("content")
+        new_article = Article.objects.create(title=title, author=author, content=content)
+        contex = {
+            "article": new_article
         }
-        return render(requeste, 'create.html')
+        return render(request, 'article.html', contex)
+
+
