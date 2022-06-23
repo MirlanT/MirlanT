@@ -8,9 +8,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>Hello</h2>
-{{title}}
-{{author}}
-{{content}}
+<a href="article/add">Создание статьи</a>
+    {% for article in articles %}
+        <h3>{{ article.title }}</h3>
+        <p><a href="#">Подробнее</a></p>
+    {% endfor %}
 </body>
 </html>

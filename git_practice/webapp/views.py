@@ -1,15 +1,23 @@
 from django.shortcuts import render
 
-
 # Create your views here.
-def index_view(requeste):
+from webapp.models import Article
+
+
+def index_app(request):
+    articles = Article.objects.order_by("-created_at")
+    contex = {"articles": articles}
+    return render(request, 'index.html', contex)
+
+
+def index_create(requeste):
     if requeste.method == "GET":
-        return render(requeste, 'index.html')
+        return render(requeste, 'create.html')
     else:
         contex = {
-            'title': requeste.POST.get("title"),
+            'title': requeste.POST.aget("title"),
             'author': requeste.POST.get("author"),
             'content': requeste.POST.get("content")
 
         }
-        return render(requeste, 'index.html')
+        return render(requeste, 'create.html')
