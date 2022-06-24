@@ -3,6 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 from webapp.models import Article
 
+from webapp.models import STATUS_CH
+
 
 def index_app(request):
     articles = Article.objects.order_by("-created_at")
@@ -21,12 +23,19 @@ def article_view(request):
 
 def index_create(request):
     if request.method == "GET":
-        return render(request, 'create.html')
+        contex = {
+            "statuses": STATUS_CH
+        }
+        return render(request, 'create.html', contex)
     else:
         title = request.POST.get("title")
         author = request.POST.get("author")
         content = request.POST.get("content")
-        new_article = Article.objects.create(title=title, author=author, content=content)
+        status = request.POST.get("status")
+        date = request.POST.get("date")
+        if not date:
+            date = None
+        new_article = Article.objects.create(title=title, author=author, content=content,status=status, date=date)
         contex = {
             "article": new_article
         }
