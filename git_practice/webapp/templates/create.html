@@ -7,6 +7,15 @@
     <label>Author:</label><br/>
     <input type="text" name="author"/><br/>
     <br/>
+    <label for="">Время</label>
+    <input type="text" name="date" value="" placeholder="YYYY-mm-dd">
+    <label for="">Status</label>
+    <select name="status">
+        {% for status in statuses  %}
+            <option value="{{ status.0 }}">{{ status.1 }}</option>
+        {% endfor %}
+    </select>
+    <br>
     <input type="submit" value="Send"/>
 </form>
 <a href="/">На главную</a>

@@ -13,6 +13,11 @@
     <br>
     {{ article.content }}
     <br>
+    {% if article.date %}
+        <p>Дата окончания задачи: {{ article.date }}</p>
+    {% else %}
+        <p></p>
+    {% endif %}
 <a href="/" class="btn btn-success">На главную</a>
     </div>
 
