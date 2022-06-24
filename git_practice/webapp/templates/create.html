@@ -1,12 +1,36 @@
-<form action="/articles/add/" method="post">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+<div class="container">
+    <form action="/articles/add/" method="post">
     {% csrf_token %}
-    <label>Title:</label><br/>
+    <label>Задача</label><br/>
     <input type="text" name="title"/><br/>
-    <label>Text:</label><br/>
+    <label>Статус</label><br/>
     <textarea name="content"></textarea><br/>
     <label>Author:</label><br/>
     <input type="text" name="author"/><br/>
     <br/>
+    <label for="">Время</label>
+    <input type="text" name="date" value="" placeholder="YYYY-mm-dd">
+    <label for="">Status</label>
+    <select name="status">
+        {% for status in statuses  %}
+            <option value="{{ status.0 }}">{{ status.1 }}</option>
+        {% endfor %}
+    </select>
+    <br>
     <input type="submit" value="Send"/>
 </form>
 <a href="/">На главную</a>
+</div>
+</body>
+</html>
