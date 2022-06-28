@@ -18,7 +18,7 @@
                 <span>Статус : {{ article.status }} - {{ article.get_status_dispay }}</span>
                      <br>
                      <br>
-                <p><a href="articles/?pk={{article.pk}}" class="btn btn-dark">Подробнее</a></p>
+                <p><a href="articles/{{article.pk}}/" class="btn btn-dark">Подробнее</a></p>
                 </div>
             {% endfor %}
     </div>

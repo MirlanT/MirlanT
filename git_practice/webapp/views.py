@@ -1,8 +1,7 @@
-from django.shortcuts import render
-
-# Create your views here.
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from webapp.models import Article
-
 from webapp.models import STATUS_CH
 
 
@@ -12,13 +11,12 @@ def index_app(request):
     return render(request, 'index.html', contex)
 
 
-def article_view(request):
-    pk = request.GET.get("pk")
+def article_view(request, pk):
     article = Article.objects.get(pk=pk)
     contex = {
         "article": article
     }
-    return render(request, 'article.html', contex)
+    return render(request  , 'article.html', contex)
 
 
 def index_create(request):
@@ -36,9 +34,12 @@ def index_create(request):
         if not date:
             date = None
         new_article = Article.objects.create(title=title, author=author, content=content,status=status, date=date)
-        contex = {
-            "article": new_article
-        }
-        return render(request, 'article.html', contex)
+        # contex = {
+        #     "article": new_article
+        # }
+        return redirect("article_view", pk=new_article.pk)
+        # return HttpResponseRedirect(reverse("article_view", kwargs={"pk": new_article.pk}))
+        # return HttpResponseRedirect(f"/articles/{new_article.pk}")
+
 
 
