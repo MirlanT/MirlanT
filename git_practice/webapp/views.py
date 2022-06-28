@@ -16,7 +16,7 @@ def article_view(request, pk):
     contex = {
         "article": article
     }
-    return render(request  , 'article.html', contex)
+    return render(request, 'article.html', contex)
 
 
 def index_create(request):
