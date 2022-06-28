@@ -18,8 +18,8 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
               {% block nav %}
+                  <a class="nav-link active" aria-current="page" href="{% url "article_add" %}">Создание задачи</a>
               {% endblock %}
-              <a class="nav-link" href="{%  url "index" %}">Features</a>
            </div>
         </div>
       </div>

@@ -11,6 +11,10 @@ def index_app(request):
     return render(request, 'index.html', contex)
 
 
+def main_view(request):
+    return render(request, 'main.html')
+
+
 def article_view(request, pk):
     article = Article.objects.get(pk=pk)
     contex = {
@@ -33,13 +37,10 @@ def index_create(request):
         date = request.POST.get("date")
         if not date:
             date = None
-        new_article = Article.objects.create(title=title, author=author, content=content,status=status, date=date)
+        new_article = Article.objects.create(title=title, author=author, content=content, status=status, date=date)
         # contex = {
         #     "article": new_article
         # }
         return redirect("article_view", pk=new_article.pk)
         # return HttpResponseRedirect(reverse("article_view", kwargs={"pk": new_article.pk}))
         # return HttpResponseRedirect(f"/articles/{new_article.pk}")
-
-
-
