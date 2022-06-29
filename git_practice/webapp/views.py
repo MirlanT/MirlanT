@@ -42,5 +42,22 @@ def index_create(request):
         #     "article": new_article
         # }
         return redirect("article_view", pk=new_article.pk)
-        # return HttpResponseRedirect(reverse("article_view", kwargs={"pk": new_article.pk}))
-        # return HttpResponseRedirect(f"/articles/{new_article.pk}")
+
+def index_update(request, pk):
+    article = Article.objects.get(pk=pk)
+    if request.method == "GET":
+        contex = {
+            "statuses": STATUS_CH,
+            "article": article
+        }
+        return render(request, 'update.html', contex)
+    else:
+        article.title = request.POST.get("title")
+        article.author = request.POST.get("author")
+        article.content = request.POST.get("content")
+        article.status = request.POST.get("status")
+        article.date = request.POST.get("date")
+        if not article.date:
+            article.date = None
+        article.save()
+        return redirect("article_view", pk=article.pk)
