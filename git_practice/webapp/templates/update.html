@@ -1,33 +1,9 @@
 {% extends "BASE.html" %}
 {% block title %}Изменение статьи{% endblock %}
-{%  block content %}
+{% block content %}
     <div class="container">
         <form action="" method="post">
-            {% csrf_token %}
-            <label>Задача</label><br/>
-            <input type="text" name="title" value ="{{ article.title }}"/><br/>
-            <label>Доплнительная информация о задаче</label><br/>
-            <textarea name="content">{{ article.title }}</textarea><br/>
-            <label>Author:</label><br/>
-            <input type="text" name="author" value ="{{ article.author }}"/><br/>
-            <br/>
-            <label for="">Время</label>
-            <br>
-            <input type="text" name="date" placeholder="YYYY-mm-dd">
-            <br>
-            <label for="">Status</label>
-            <br>
-            <select name="status">
-                {% for status in statuses %}
-                    <option value="{{ status.0 }}">{{ status.1 }}</option>
-                {% endfor %}
-            </select>
-            <br>
-            <br>
-            <input type="submit" class="btn btn-outline-success" value="Изменить"/>
-
-            <br>
-            <br>
+            {% include "partial/form.html" with botton_text="Create" %}
         </form>
         <a href="{% url "index" %}" class="btn btn-outline-dark">На главную</a>
     </div>
