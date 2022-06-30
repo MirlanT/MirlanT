@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from webapp.models import Article
@@ -6,7 +6,7 @@ from webapp.models import STATUS_CH
 
 
 def index_app(request):
-    articles = Article.objects.order_by("-created_at")
+    articles = Article.objects.order_by("-updated_at")
     contex = {"articles": articles}
     return render(request, 'index.html', contex)
 
@@ -61,3 +61,12 @@ def index_update(request, pk):
             article.date = None
         article.save()
         return redirect("article_view", pk=article.pk)
+
+
+def delete_article(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    if request.method == "GET":
+        return render(request, "delete.html", {"article": article})
+    else:
+        article.delete()
+        return redirect("index")

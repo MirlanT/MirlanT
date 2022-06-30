@@ -17,6 +17,7 @@
     {% else %}
         <p></p>
     {% endif %}
-<a href="{% url "index" %}" class="btn btn-success">На главную</a>
+    <a href="{% url "index" %}" class="btn btn-success">На главную</a>
+    <a class="btn btn-danger" aria-current="page" href="{% url "delete_article" article.pk %}">Удалить</a>
     </div>
 {%  endblock %}
