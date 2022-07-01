@@ -4,6 +4,8 @@ from django.urls import reverse
 from webapp.models import Article
 from webapp.models import STATUS_CH
 
+from webapp.validate import article_validate
+
 
 def index_app(request):
     articles = Article.objects.order_by("-updated_at")
@@ -30,18 +32,39 @@ def index_create(request):
         }
         return render(request, 'create.html', contex)
     else:
+        # errors = {}
         title = request.POST.get("title")
         author = request.POST.get("author")
         content = request.POST.get("content")
         status = request.POST.get("status")
         date = request.POST.get("date")
+        new_article = Article.objects.create(title=title, author=author, content=content, status=status)
+        errors = article_validate(title, author, content, status)
         if not date:
             date = None
-        new_article = Article.objects.create(title=title, author=author, content=content, status=status, date=date)
+        # if not title:
+        #     errors["title"] = "Поле обязательное символов"
+        # elif len(title) > 50:
+        #     errors["title"] = "Поле должно быть меньше 50 символов"
+        # if not author:
+        #     errors["author"] = "Поле обязательное"
+        # elif len("author") > 50:
+        #     errors["author"] = "Поле должно быть меньше 50 символов"
+        # if not content:
+        #     errors["content"] = "Поле обязательное"
+        # elif len(author) > 2000:
+        #     errors["author"] = "Поле должно быть меньше 50 символов"
+        # if not status:
+        #     errors["status"] = "Поле обязательное"
+
+        if errors:
+            return render(request, "create.html", {"errors": errors, "article": new_article} )
+        new_article.save()
         # contex = {
         #     "article": new_article
         # }
         return redirect("article_view", pk=new_article.pk)
+
 
 def index_update(request, pk):
     article = Article.objects.get(pk=pk)
@@ -57,8 +80,11 @@ def index_update(request, pk):
         article.content = request.POST.get("content")
         article.status = request.POST.get("status")
         article.date = request.POST.get("date")
+        errors = article_validate(article.title, article.author, article.content, article.status)
         if not article.date:
             article.date = None
+        if errors:
+            return render(request, "update.html", {"article": article, "errors": errors})
         article.save()
         return redirect("article_view", pk=article.pk)
 
